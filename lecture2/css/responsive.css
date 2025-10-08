@@ -114,67 +114,81 @@ dl{
 
 /* STUDENT CODE STARTS HERE */
 
-/* --- Responsive Grid Base (fix equal sizing) --- */
+/* --- Responsive Grid Base (Mobile-first: alternate 2–1 on small screens) --- */
 .grid {
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  grid-auto-rows: 1fr;      /* keeps rows equal height */
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* base: 2 columns so small screens show 2/1/2/1 */
   gap: 15px;
+  padding: 15px;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
 }
 
 .grid > * {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 100%;
-  box-sizing: border-box;
 }
 
-/* --- Tablet (≥768px) --- */
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: 45% 45%;
-    justify-content: center; /* keeps 2 columns centered */
-    gap: 20px;
-  }
-
-  /* Make every 3rd card span across both columns */
-  .grid > :nth-child(3n) {
-    grid-column: 1 / -1;
-    justify-self: center; 
-    width: 50%; /* only take up half width while spanning */
-  }
-
-  .gallery {
-    justify-content: space-around;
-  }
-
-  .gallery img {
-    flex: 1 1 30%;
-  }
+/* every 3rd item spans both columns -> pattern: (1,2) then full-width (3) */
+.grid > *:nth-child(3n) {
+  grid-column: 1 / -1;
 }
 
-
-/* --- Desktop (≥1000px) --- */
+/* --- Desktop (≥1000px): force 3-per-row and cancel the "span" behavior --- */
 @media (min-width: 1000px) {
   .grid {
     grid-template-columns: repeat(3, 1fr); /* 3 equal cards per row */
     gap: 2rem;
   }
 
-  .gallery {
-    justify-content: space-between;
-  }
-
-  .gallery img {
-    flex: 1 1 200px;
-  }
-
-  .grid > *:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-    transition: box-shadow 0.25s ease;
+  /* remove the spanning so layout stays strictly 3-per-row */
+  .grid > :nth-child(3n) {
+    grid-column: auto;
+    width: inherit; 
   }
 }
+
+/* --- Light Mode --- */
+@media (prefers-color-scheme: light) {
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .grid > * {
+    background: #fff;
+    border: 1px solid #000;
+    color: #000;
+  }
+}
+
+
+
+/* --- Dark Mode --- */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111;
+    color: #eee;
+  }
+
+  .grid > div {
+    background: #111;
+    border: 1px solid #EB5B00; /* orange border */
+    color: #eee;
+  }
+
+  /* every even card gets white background */
+  .grid > div:nth-child(even) {
+    background: #fff;
+    color: #000; /* ensure text is visible on white */
+  }
+}
+
+
+
+
 
 /* --- Print View --- */
 @media print {
@@ -209,41 +223,5 @@ dl{
   }
 }
 
-/* --- Dark Mode --- */
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #111;
-    color: #eee;
-  }
 
-  .grid > div {
-    border: 1px solid #EB5B00; 
-    color: #eee;
-  }
-
-  .grid > *:nth-child(even) {
-    background: #000; /* alternate full black */
-  }
-}
-
-/* --- Light Mode --- */
-@media (prefers-color-scheme: light) {
-  body {
-    background: #fff;
-    color: #000;
-  }
-
-  .grid > * {
-    background: #fff;
-    border: 1px solid #000;
-    color: #000;
-  }
-}
-
-
-/* Problem */ 
-ok border has to be red if its dark mode, it is blue right now which is wrong. 
-Also, the grid view is supposed to change as I decrease the screen!
-It should change by have 2 cards and 1 and 2 and 1 alternating as the spec says. only when screen decreases! 
-Please ONLY GIVE ME the code that needs to be fizxed and start from that section! because the rest of it seems right and believe is correct! 
 
