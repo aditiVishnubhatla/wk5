@@ -16,96 +16,6 @@
   flex-basis: 90%;  /* flex-basis practice */
 }
 
-/* CODE FROM MONDAY*/
-section{
-  width: 90%;
-  margin: auto;
-  padding: 10px;
-  border: 2px solid black;
-  background-color: lightgray;
-}
-
-/* Character card styling */
-.grid div {
-  background: #f2f2f2;
-  padding: 15px;
-  text-align: center;
-  border: 1px solid blue;
-  box-sizing: border-box; 
-  overflow-wrap: break-word; 
-}
-
-/* Images */
-.grid img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 25px;
-  box-sizing: border-box; 
-}
-
-.gallery img {
-  border: 3px yellow dashed;
-  border-radius: 50px;
-
-}
-
-/* Headings */
-.character h3 {
-  font-size: 1.2rem;
-  margin: 10px 0;
-  color: #333;
-}
-  
-.grid dt {
-  font-weight: bold;
-  color: #444;
-}
-
-.grid dd {
-  margin: 0;
-  color: #555;
-}
-
-dl{
-  display: grid; 
-  grid-template-columns: auto 1fr;
-  justify-items: start; 
-  text-align: left; 
-  gap: 15px;
-  padding: 15px; 
-  
-}
-
-.grid{
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-  gap: 15px; 
-  padding: 15px; 
-}
-
-.grid div:nth-of-type(even) img{
-  filter: grayscale(100%);
-  border: 25px solid black; 
-  /* box-sizing: border-box;  */
-}
-
-.gallery {
-  display: flex; 
-  flex-wrap: wrap; 
-  justify-content: center;
-  gap: 15px; 
-  padding: 15px; 
-}
-
-.gallery img {
-  border: 3px yellow dashed;
-  border-radius: 50px;
-  transition: transform 0.2s ease; 
-}
-
-.gallery img:hover {
-  transform: scale(1.05); /* zoom slightly on hover */
-}
 
 
 
@@ -115,29 +25,33 @@ dl{
 /* STUDENT CODE STARTS HERE */
 
 /* --- Responsive Grid Base (Mobile-first: alternate 2–1 on small screens) --- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* base: 2 columns so small screens show 2/1/2/1 */
-  gap: 15px;
-  padding: 15px;
-  align-items: stretch;
-  grid-auto-rows: 1fr;
-}
+@media (min-width: 768px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* base: 2 columns so small screens show 2/1/2/1 */
+    gap: 15px;
+    padding: 15px;
+    /* align-items: stretch; */
+    grid-auto-rows: 1fr;
+    justify-items: center;
+  }
 
-.grid > * {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
+  .grid > * {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
-/* every 3rd item spans both columns -> pattern: (1,2) then full-width (3) */
-.grid > *:nth-child(3n) {
-  grid-column: 1 / -1;
+  /* every 3rd item spans both columns -> pattern: (1,2) then full-width (3) */
+  .grid > *:nth-child(3n) {
+    grid-column: 1 / -1;
+    width: 50%;
+  }
 }
 
 /* --- Desktop (≥1000px): force 3-per-row and cancel the "span" behavior --- */
-@media (min-width: 1000px) {
+@media (min-width: 1200px) {
   .grid {
     grid-template-columns: repeat(3, 1fr); /* 3 equal cards per row */
     gap: 2rem;
@@ -147,6 +61,13 @@ dl{
   .grid > :nth-child(3n) {
     grid-column: auto;
     width: inherit; 
+  }
+
+  .gallery{
+    justify-content: space-between;
+  }
+  .gallery img{
+    flex: 1 1 200px; 
   }
 }
 
